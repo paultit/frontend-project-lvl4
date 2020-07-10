@@ -14,7 +14,8 @@
     "build-server": "babel server --out-dir dist --source-maps inline",
     "build-app": "npx webpack -p --env production",
     "build": "npm run build-app && npm run build-server",
-    "postinstall": "npm run build"    
+    "postinstall": "npm run build",
+    "start": "babel-node ./server/bin/slack.js"
   },
   "repository": {
     "type": "git",
@@ -56,7 +57,7 @@
     "formik": "^2.1.4",
     "jquery": "^3.5.1",
     "js-cookie": "^2.2.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "mini-css-extract-plugin": "^0.9.0",
     "node-sass": "^4.14.1",
     "point-of-view": "^3.8.0",
