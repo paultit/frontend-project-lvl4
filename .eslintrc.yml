@@ -1,0 +1,31 @@
+---
+
+plugins:
+  # https://github.com/babel/eslint-plugin-babel
+  - babel
+  - import
+  - react  
+
+env:
+  node: true
+  es6: true
+  browser: true
+  jest: true  
+
+extends:
+  - 'airbnb-base'
+  - 'plugin:jest/recommended'
+  - 'plugin:react/recommended'
+
+globals:
+  Atomics: readonly
+  SharedArrayBuffer: readonly
+
+parserOptions:
+  ecmaVersion: 2018
+  sourceType: module        
+
+rules:
+  no-console: 'off'
+  import/extensions: 'off'
+  react/prop-types: 'off'
