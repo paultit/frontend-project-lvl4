@@ -1,12 +1,16 @@
 import React from 'react';
+import Chat from './Chat.jsx';
+import PanelChannels from './PanelChannels.jsx';
+import UserContext from '../context.jsx';
+import getUserName from '../utils/getUserName';
 
-class App extends React.Component {
-  render() {
-    const { gon } = this.props;
-    console.log(gon);
-    return (<div>
-            {gon.channels.map((item) => <div key={ item.id }>{ item.name }</div>)}</div>
-    );
-  }
-}
+const App = () => (
+  <UserContext.Provider value={getUserName()}>
+    <main role="application" className="row d-flex h-100 mx-auto overflow-hidden">
+      <PanelChannels />
+      <Chat />
+  </main>
+  </UserContext.Provider>
+);
+
 export default App;
