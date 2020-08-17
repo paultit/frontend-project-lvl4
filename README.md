@@ -6,14 +6,38 @@
 
 https://quiet-thicket-70927.herokuapp.com/
 
+---
+
+### 1. Install dependencies:
+
+```
+$ make install
+```
+### 2. Start project:
+
+```
+$ make start
+```
+### 3. Build project:
+
+```
+$ make build
+```
+### 4. Deploy project:
+
+```
+$ make deploy
+```
+---
+
 This project is a simple version of slack-type chat. 
 
-Using:
-React + Redux + Forms
-Bootstrap on React
-Websockets
-Async(Async/Await)
-HTTP-requests(Axios)
-JS-Coockie
-Webpack
-and a lot of ES6+ JS 
+Using:  
+React + Redux + Forms  
+Bootstrap on React  
+Websockets  
+Async(Async/Await)  
+HTTP-requests(Axios)  
+JS-Coockie  
+Webpack  
+and a lot of ES6+ JS   
