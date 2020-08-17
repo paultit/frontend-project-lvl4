@@ -6,6 +6,14 @@
 
 https://quiet-thicket-70927.herokuapp.com/
 
-This project is a simple version of slack-type chat.   
-Made with React and Redux.   
-Uses NodeJS as a server.
+This project is a simple version of slack-type chat. 
+
+Using:
+React + Redux + Forms
+Bootstrap on React
+Websockets
+Async(Async/Await)
+HTTP-requests(Axios)
+JS-Coockie
+Webpack
+and a lot of ES6+ JS 

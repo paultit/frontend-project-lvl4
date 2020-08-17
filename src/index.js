@@ -12,6 +12,4 @@ import init from './init.jsx';
 if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }
-init();
-console.log('it works!');
-console.log('gon', gon);
+init(gon);

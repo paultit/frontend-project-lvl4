@@ -1,42 +1,41 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import io from 'socket.io-client';
-import * as actions from '../actions/index';
+import { useSelector } from 'react-redux';
 
-const mapStateToProps = (state) => {
-  const props = {
-    messages: state.messages,
-  };
-  return props;
-};
+const PanelMessages = () => {
+  const activeChannel = useSelector((state) => state.channels.channels
+    .find(({ id }) => id === state.channels.activeChannelId));
+  const activeChannelId = useSelector((state) => state.channels.activeChannelId);
+  const messages = useSelector((state) => state.messages.messages
+    .filter(({ channelId }) => channelId === activeChannelId));
 
-const actionCreators = {
-  getMessage: actions.getMessage,
-};
-
-class PanelMessages extends React.Component {
-  componentDidMount() {
-    const { getMessage } = this.props;
-    const port = process.env.PORT;
-    const socket = io(port);
-
-    socket.on('newMessage', (data) => getMessage(data.data.attributes));
-  }
-
-  render() {
-    const { messages } = this.props;
+  const renderMessages = (currentMessages) => {
+    if (currentMessages.length === 0) {
+      return null;
+    }
     return (
-        <div className="pt-3 pl-3">
-            {messages.map(({ id, name, text }) => (
-                <span className="col-12" key={id}>
-                    {name}
-                    :
-                    {text}
-                </span>
-            ))}
+      <div className="pt-3 pl-3">
+        {messages.map(({ id, username, message }) => (
+          <div key={id}>
+            <span className="font-weight-bold mr-2">
+              {username}
+              :
+            </span>
+            <span>{message}</span>
         </div>
+        ))}
+      </div>
     );
-  }
-}
+  };
+  return (
+    <React.Fragment>
+      <div className="pt-3 pl-3">
+        <span className="col-12">
+          {`#${activeChannel.name}`}
+        </span>
+      </div>
+      {renderMessages(messages)}
+    </React.Fragment>
+  );
+};
 
-export default connect(mapStateToProps, actionCreators)(PanelMessages);
+export default PanelMessages;

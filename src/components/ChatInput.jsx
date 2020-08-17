@@ -1,48 +1,61 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { Field, reduxForm } from 'redux-form';
-import * as actions from '../actions/index';
+import React, { useContext } from 'react';
+import { Form, Button } from 'react-bootstrap';
+import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { asyncActions } from '../slices';
+import UserContext from '../context.jsx';
 
-const mapStateToProps = (state) => {
-  const props = {
-    message: state.text,
-    currentChannelId: state.currentChannelId,
-    messageFetchingState: state.messageFetchingState,
+const ChatInput = () => {
+  const username = useContext(UserContext);
+  const { t } = useTranslation();
+  const activeChannelId = useSelector((state) => state.channels.activeChannelId);
+  const { messages: { validationState } } = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const validationSchema = Yup.object().shape({
+    message: Yup.string().required(t('Required field')),
+  });
+  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+    if (values.message.length === 0) {
+      return;
+    }
+    const data = {
+      channelId: activeChannelId,
+      username,
+      message: values.message,
+    };
+    await dispatch(asyncActions.addMessage(data));
+    setSubmitting(false);
+    resetForm();
   };
-  return props;
+  const formik = useFormik({
+    initialValues: {
+      message: '',
+    },
+    validationSchema,
+    onSubmit: handleSubmit,
+  });
+  return (
+    <Form onSubmit={formik.handleSubmit} className="mx-3">
+      <Form.Group className="w-100 d-flex flex-wrap mb-0">
+        <Form.Control
+          name="message"
+          type="text"
+          placeholder={'Enter text'}
+          onChange={formik.handleChange}
+          value={formik.values.message}
+          disabled={formik.isSubmitting}
+        />
+        <Button className="ml-2" type="submit" variant="primary" disabled={formik.isSubmitting || formik.errors.message || validationState === 'invalid'}>
+          Send
+        </Button>
+        {formik.errors.message
+          && <h5 className="d-block invalid-feedback">{formik.errors.message}</h5>
+        }
+      </Form.Group>
+    </Form>
+  );
 };
 
-const actionCreators = {
-  addMessage: actions.addMessage,
-};
-
-class ChatInput extends React.Component {
-  handleSubmit = ({ message }) => {
-    const { currentChannelId, addMessage, reset } = this.props;
-    const name = this.context;
-    const data = { attributes: { message, author: name } };
-    addMessage({ data }, currentChannelId);
-    reset();
-  };
-
-  render() {
-    const {
-      handleSubmit, submitting, pristine, error, messageFetchingState,
-    } = this.props;
-    const isDisabled = submitting || pristine;
-    console.log(messageFetchingState, error);
-    return (
-      <form className="form inline d-flex" onSubmit={handleSubmit(this.handleSubmit)}>
-        <div className="form-group w-100">
-          <Field className="form-control" name="text" required component="input" type="text" />
-        </div>
-        <button type="submit" disabled={isDisabled} className="btn btn-primary btn-sm" value="Send">Send</button>
-      </form>
-    );
-  }
-}
-
-const ConnectedChatInput = connect(mapStateToProps, actionCreators)(ChatInput);
-export default reduxForm({
-  form: 'newMessage',
-})(ConnectedChatInput);
+export default ChatInput;
