@@ -8,10 +8,9 @@ import * as Yup from 'yup';
 export default (props) => {
   const { modalProps: { addChannel }, modalHide } = props;
   const { t } = useTranslation();
-  const { channels: { validationState } } = useSelector((state) => state);
   const store = useSelector((state) => {
-    const { channels: { channels } } = state;
-    const namesChannels = channels.map((channel) => channel.name);
+    const { channels: { data } } = state;
+    const namesChannels = data.map((channel) => channel.name);
     return { namesChannels };
   });
   const validationSchema = Yup.object().shape({
@@ -58,7 +57,7 @@ export default (props) => {
           <Button type="reset" variant="secondary" disabled={formik.isSubmitting}>
             Close
           </Button>
-          <Button type="submit" variant="primary" disabled={formik.isSubmitting || formik.errors.message || validationState === 'invalid'}>
+          <Button type="submit" variant="primary" disabled={formik.isSubmitting || formik.errors.message}>
             Add
           </Button>
         </Modal.Footer>

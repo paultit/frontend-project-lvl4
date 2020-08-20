@@ -11,7 +11,6 @@ const ChatInput = () => {
   const username = useContext(UserContext);
   const { t } = useTranslation();
   const activeChannelId = useSelector((state) => state.channels.activeChannelId);
-  const { messages: { validationState } } = useSelector((state) => state);
   const dispatch = useDispatch();
   const validationSchema = Yup.object().shape({
     message: Yup.string().required(t('Required field')),
@@ -47,7 +46,7 @@ const ChatInput = () => {
           value={formik.values.message}
           disabled={formik.isSubmitting}
         />
-        <Button className="ml-2" type="submit" variant="primary" disabled={formik.isSubmitting || formik.errors.message || validationState === 'invalid'}>
+        <Button className="ml-2" type="submit" variant="primary" disabled={formik.isSubmitting || formik.errors.message}>
           Send
         </Button>
         {formik.errors.message

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
 import Chat from './Chat.jsx';
-import PanelChannels from './PanelChannels.jsx';
+import ChannelsBox from './ChannelsBox.jsx';
 import getModal from './modals/index';
 import { actions, asyncActions } from '../slices';
 
@@ -54,7 +54,7 @@ const App = (props) => {
   };
   return (
     <main className="row d-flex h-100 mx-auto overflow-hidden">
-      <PanelChannels />
+      <ChannelsBox />
       <Chat />
       {renderModal({ modalData, modalHide, modalProps })}
     </main>

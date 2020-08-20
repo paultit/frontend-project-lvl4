@@ -10,39 +10,34 @@ import { showError } from '../utils/index';
 const slice = createSlice({
   name: 'messages',
   initialState: {
-    messages: [],
-    validationState: 'valid',
+    data: [],
   },
   reducers: {
     addMessagesSuccess: (state, { payload }) => {
-      state.messages = payload;
+      state.data = payload;
     },
     addMessageSuccess: (state, { payload }) => {
       const { data: { attributes } } = payload;
-      state.messages.push(attributes);
-      state.validationState = 'valid';
-    },
-    addMessageFailure(state) {
-      state.validationState = 'invalid';
+      state.data.push(attributes);
     },
   },
   extraReducers: {
     [channelActions.removeChannelSuccess]: (state, { payload }) => {
       const { data: { id } } = payload;
-      state.messages.filter((message) => message.channelId !== id);
+      state.data.filter((message) => message.channelId !== id);
     },
   },
 });
 
-const addMessage = ({ channelId, username, message }) => async (dispatch) => {
+const addMessage = ({ channelId, username, message }) => async () => {
   const data = { attributes: { username, message } };
   const url = routes.channelMessagesPath(channelId);
   try {
     await axios.post(url, { data });
     toast.success(i18n.t('addMessage'));
   } catch (e) {
-    dispatch(slice.actions.addMessageFailure());
     showError(e);
+    throw e;
   }
 };
 

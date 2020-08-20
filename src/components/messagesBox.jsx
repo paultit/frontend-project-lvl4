@@ -1,11 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-const PanelMessages = () => {
-  const activeChannel = useSelector((state) => state.channels.channels
+const MessagesBox = () => {
+  const activeChannel = useSelector((state) => state.channels.data
     .find(({ id }) => id === state.channels.activeChannelId));
   const activeChannelId = useSelector((state) => state.channels.activeChannelId);
-  const messages = useSelector((state) => state.messages.messages
+  const messages = useSelector((state) => state.messages.data
     .filter(({ channelId }) => channelId === activeChannelId));
 
   const renderMessages = (currentMessages) => {
@@ -38,4 +38,4 @@ const PanelMessages = () => {
   );
 };
 
-export default PanelMessages;
+export default MessagesBox;

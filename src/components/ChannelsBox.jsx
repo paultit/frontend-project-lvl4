@@ -5,9 +5,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { actions } from '../slices';
 
-const PanelChannels = () => {
+const ChannelsBox = () => {
   const activeChannelId = useSelector((state) => state.channels.activeChannelId);
-  const channels = useSelector((state) => state.channels.channels);
+  const channels = useSelector((state) => state.channels.data);
   const dispatch = useDispatch();
 
   const handleClick = (id) => (e) => {
@@ -62,4 +62,4 @@ const PanelChannels = () => {
   );
 };
 
-export default PanelChannels;
+export default ChannelsBox;

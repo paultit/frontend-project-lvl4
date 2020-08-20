@@ -7,11 +7,10 @@ import * as Yup from 'yup';
 export default (props) => {
   const { modalProps: { renameChannel, modalData }, modalHide } = props;
   const store = useSelector((state) => {
-    const { channels: { channels } } = state;
-    const namesChannels = channels.map((channel) => channel.name);
+    const { channels: { data } } = state;
+    const namesChannels = data.map((channel) => channel.name);
     return { namesChannels };
   });
-  const { channels: { validationState } } = useSelector((state) => state);
   const validationSchema = Yup.object({
     name: Yup.string().required().notOneOf(store.namesChannels),
   });
@@ -57,7 +56,7 @@ export default (props) => {
           <Button type="reset" variant="secondary" disabled={formik.isSubmitting}>
             Close
           </Button>
-          <Button type="submit" variant="primary" disabled={formik.isSubmitting || formik.errors.name || validationState === 'invalid'}>
+          <Button type="submit" variant="primary" disabled={formik.isSubmitting || formik.errors.name}>
             Rename
           </Button>
         </Modal.Footer>

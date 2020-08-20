@@ -4,15 +4,15 @@ import { Provider } from 'react-redux';
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import io from 'socket.io-client';
 import './i18n';
+import cookies from 'js-cookie';
 import 'react-toastify/dist/ReactToastify.css';
 import reducer, { actions } from './slices/index';
 import App from './components/App.jsx';
-import { getUserName } from './utils/index.js';
 import UserContext from './context.jsx';
 
 export default (gon) => {
   const socket = io();
-  const username = getUserName();
+  const username = cookies.get('username');
   const { channels, messages, currentChannelId } = gon;
 
   const store = configureStore({
