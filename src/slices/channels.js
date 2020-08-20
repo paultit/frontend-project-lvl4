@@ -4,7 +4,7 @@ import axios from 'axios';
 import i18n from 'i18next';
 import { toast } from 'react-toastify';
 import routes from '../routes.js';
-import { showError } from '../utils/index';
+import showError from '../utils/index';
 
 const slice = createSlice({
   name: 'channels',
