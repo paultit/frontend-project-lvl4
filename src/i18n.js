@@ -10,17 +10,20 @@ const resources = {
       rename: 'Channel renamed',
       remove: 'Channel removed',
       addMessage: 'Message added',
+      required: 'Required field',
     },
   },
 };
 
-i18n
-  .use(initReactI18next)
-  .init({
-    resources,
-    lng: 'en',
-    debug: true,
-    fallbacklng: false,
-  });
+(async () => {
+  await i18n
+    .use(initReactI18next)
+    .init({
+      resources,
+      lng: 'en',
+      debug: true,
+      fallbacklng: false,
+    });
+})();
 
 export default i18n;

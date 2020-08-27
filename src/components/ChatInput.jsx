@@ -13,7 +13,7 @@ const ChatInput = () => {
   const activeChannelId = useSelector((state) => state.channels.activeChannelId);
   const dispatch = useDispatch();
   const validationSchema = Yup.object().shape({
-    message: Yup.string().required(t('Required field')),
+    message: Yup.string().required(t('required')),
   });
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     if (values.message.length === 0) {

@@ -19,7 +19,6 @@ const ChannelsBox = () => {
     e.preventDefault();
     dispatch(actions.modalShow({ type, channel }));
   };
-
   const btnClass = (id) => cn({
     'nav-link': true,
     btn: true,
@@ -62,4 +61,4 @@ const ChannelsBox = () => {
   );
 };
 
-export default ChannelsBox;
+export default React.memo(ChannelsBox);

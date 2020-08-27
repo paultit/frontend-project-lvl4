@@ -5,6 +5,7 @@ import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import io from 'socket.io-client';
 import './i18n';
 import cookies from 'js-cookie';
+import faker from 'faker';
 import 'react-toastify/dist/ReactToastify.css';
 import reducer, { actions } from './slices/index';
 import App from './components/App.jsx';
@@ -12,7 +13,8 @@ import UserContext from './context.jsx';
 
 export default (gon) => {
   const socket = io();
-  const username = cookies.get('username');
+  const userName = cookies.get('userName') || faker.name.findName();
+  cookies.set('userName', userName);
   const { channels, messages, currentChannelId } = gon;
 
   const store = configureStore({
@@ -31,7 +33,7 @@ export default (gon) => {
 
   render(
     <Provider store={store}>
-      <UserContext.Provider value={username}>
+      <UserContext.Provider value={cookies.get('userName')}>
         <App />
       </UserContext.Provider>
     </Provider>,

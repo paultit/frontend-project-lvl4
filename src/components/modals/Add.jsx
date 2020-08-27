@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useFormik } from 'formik';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 
@@ -14,12 +14,13 @@ export default (props) => {
     return { namesChannels };
   });
   const validationSchema = Yup.object().shape({
-    name: Yup.string().max(20).required(t('Required field')).notOneOf(store.namesChannels),
+    name: Yup.string().max(20).required(t('required')).notOneOf(store.namesChannels),
   });
+  const dispatch = useDispatch();
   const addNewChannel = async (values, { setSubmitting }) => {
-    await addChannel(values.name);
+    await dispatch(addChannel(values.name));
     setSubmitting(false);
-    modalHide();
+    dispatch(modalHide());
   };
 
   const formik = useFormik({
@@ -28,10 +29,10 @@ export default (props) => {
     },
     validationSchema,
     onSubmit: addNewChannel,
-    onReset: () => modalHide(),
+    onReset: () => dispatch(modalHide()),
   });
   return (
-    <Modal show onHide={modalHide} centered>
+    <Modal show onHide={() => dispatch(modalHide())} centered>
       <Modal.Header closeButton>
         <Modal.Title>Add a new channel</Modal.Title>
       </Modal.Header>
@@ -49,7 +50,7 @@ export default (props) => {
               disabled={formik.isSubmitting}
             />
           </Form.Group>
-          {formik.errors.message
+          {formik.errors.name
           && <h5 className="d-block invalid-feedback ml-3">{formik.errors.name}</h5>
           }
         </Modal.Body>
@@ -57,7 +58,7 @@ export default (props) => {
           <Button type="reset" variant="secondary" disabled={formik.isSubmitting}>
             Close
           </Button>
-          <Button type="submit" variant="primary" disabled={formik.isSubmitting || formik.errors.message}>
+          <Button type="submit" variant="primary" disabled={formik.isSubmitting || formik.errors.name}>
             Add
           </Button>
         </Modal.Footer>
