@@ -16,14 +16,18 @@ const resources = {
 };
 
 (async () => {
-  await i18n
-    .use(initReactI18next)
-    .init({
-      resources,
-      lng: 'en',
-      debug: true,
-      fallbacklng: false,
-    });
+  try {
+    await i18n
+      .use(initReactI18next)
+      .init({
+        resources,
+        lng: 'en',
+        debug: true,
+        fallbacklng: false,
+      });
+  } catch (e) {
+    console.log(e);
+  }
 })();
 
 export default i18n;

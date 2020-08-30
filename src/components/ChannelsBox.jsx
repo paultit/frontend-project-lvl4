@@ -61,4 +61,4 @@ const ChannelsBox = () => {
   );
 };
 
-export default React.memo(ChannelsBox);
+export default ChannelsBox;
