@@ -11,7 +11,7 @@ import reducer, { actions } from './slices/index';
 import App from './components/App.jsx';
 import UserContext from './context.jsx';
 
-export default (gon) => {
+export default async (gon) => {
   const socket = io();
   const userName = cookies.get('userName') || faker.name.findName();
   cookies.set('userName', userName);
@@ -30,7 +30,7 @@ export default (gon) => {
   socket.on('newChannel', (name) => store.dispatch(actions.addChannelSuccess(name)));
   socket.on('renameChannel', (id) => store.dispatch(actions.renameChannelSuccess(id)));
   socket.on('removeChannel', (id) => store.dispatch(actions.removeChannelSuccess(id)));
-  i18n();
+  await i18n();
 
   render(
     <Provider store={store}>
