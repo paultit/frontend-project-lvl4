@@ -15,7 +15,7 @@ const resources = {
   },
 };
 
-(async () => {
+export default async () => {
   try {
     await i18n
       .use(initReactI18next)
@@ -28,6 +28,4 @@ const resources = {
   } catch (e) {
     console.log(e);
   }
-})();
-
-export default i18n;
+};

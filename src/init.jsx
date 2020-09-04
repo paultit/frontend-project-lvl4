@@ -3,10 +3,10 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import io from 'socket.io-client';
-import './i18n';
 import cookies from 'js-cookie';
 import faker from 'faker';
 import 'react-toastify/dist/ReactToastify.css';
+import i18n from './i18n';
 import reducer, { actions } from './slices/index';
 import App from './components/App.jsx';
 import UserContext from './context.jsx';
@@ -30,6 +30,7 @@ export default (gon) => {
   socket.on('newChannel', (name) => store.dispatch(actions.addChannelSuccess(name)));
   socket.on('renameChannel', (id) => store.dispatch(actions.renameChannelSuccess(id)));
   socket.on('removeChannel', (id) => store.dispatch(actions.removeChannelSuccess(id)));
+  i18n();
 
   render(
     <Provider store={store}>
