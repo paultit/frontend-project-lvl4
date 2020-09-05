@@ -27,5 +27,6 @@ export default async () => {
       });
   } catch (e) {
     console.log(e);
+    throw e;
   }
 };
