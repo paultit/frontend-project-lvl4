@@ -16,17 +16,12 @@ const resources = {
 };
 
 export default async () => {
-  try {
-    await i18n
-      .use(initReactI18next)
-      .init({
-        resources,
-        lng: 'en',
-        debug: true,
-        fallbacklng: false,
-      });
-  } catch (e) {
-    console.log(e);
-    throw e;
-  }
+  await i18n
+    .use(initReactI18next)
+    .init({
+      resources,
+      lng: 'en',
+      debug: true,
+      fallbacklng: false,
+    });
 };
